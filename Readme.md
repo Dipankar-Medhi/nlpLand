@@ -6,11 +6,114 @@ It includes projects and code examples related to NLP tasks and methods.
 ## Contents
 - [NLP Land](#nlp-land)
   - [Contents](#contents)
+  - [Some nlp techniques](#some-nlp-techniques)
+    - [Extract Noun](#extract-noun)
+    - [Similarity between words](#similarity-between-words)
+    - [Part of Speech tagging](#part-of-speech-tagging)
+    - [Entities extraction](#entities-extraction)
   - [Text Summarization](#text-summarization)
     - [With Transformers](#with-transformers)
     - [With Simplet5](#with-simplet5)
     - [Using spaCy](#using-spacy)
   - [Topic Modeling/classification](#topic-modelingclassification)
+
+---
+
+## Some nlp techniques
+### Extract Noun
+```python
+blob = TextBlob("Rahul is a great Machine Learning Engineer. He is specialized in Natural Language Processing.")
+blob.noun_phrases
+
+# output ---
+# WordList(['rahul', 'machine learning engineer', 'language processing'])
+```
+### Similarity between words
+**Cosine Similarity**
+```python
+documents = ( 
+"I like Apple",
+"I am exploring Apple devices",
+"I am a beginner in Apple development", 
+"I want to work for Apple", 
+"I like Apple products"
+)
+# code ...
+# similarity of 1st sentence with the rest
+cosine_similarity(tfid_matrix[0:1], tfid_matrix)
+
+# output ---
+# array([[1.        , 0.14284054, 0.12305308, 0.11786255, 0.68374784]])
+```
+### Part of Speech tagging
+```python
+text = "I love programming. I love building softwares."
+# Tagging all the tokens
+for token in tokens:
+  words = nltk.word_tokenize(token)
+  words = [w for w in words if not w in stop_words]
+  # POS tagger
+  tags = nltk.pos_tag(words)
+
+print(tags)
+# output ---
+# [('I', 'PRP'),
+# ('love', 'VBP'),
+# ('building', 'VBG'),
+# ('softwares', 'NNS'),
+# ('.', '.')]
+```
+<details>
+<summary>Some common tags and their meaning</summary>
+
+- CC coordinating conjunction
+- CD cardinal digit
+- DT determiner
+- EX existential there (like: “there is” ... think of it like 
+“there exists”)
+- FW foreign word
+- IN preposition/subordinating conjunction
+- JJ adjective ‘big’
+- JJR adjective, comparative ‘bigger’
+- JJS adjective, superlative ‘biggest’
+- LS list marker 1)
+- MD modal could, will
+- NN noun, singular ‘desk’
+- NNS noun plural ‘desks’107
+- NNP proper noun, singular ‘Harrison’
+- NNPS proper noun, plural ‘Americans’
+- PDT predeterminer ‘all the kids’
+- POS possessive ending parent’s
+- PRP personal pronoun I, he, she
+- PRP$ possessive pronoun my, his, hers
+
+- RB adverb very, silently
+- RBR adverb, comparative better
+- RBS adverb, superlative best
+- RP particle give up
+- TO to go ‘to’ the store
+- UH interjection
+- VB verb, base form take
+- VBD verb, past tense took
+- VBG verb, gerund/present participle taking
+- VBN verb, past participle taken
+- VBP verb, sing. present, non-3d take
+- VBZ verb, 3rd person sing. present takes
+- WDT wh-determiner which
+- WP wh-pronoun who, what
+- WP$ possessive wh-pronoun whose
+- WRB wh-adverb where, when
+
+</details>
+
+### Entities extraction
+```python
+from nltk import ne_chunk
+# NER
+ne_chunk(nltk.pos_tag(word_tokenize(text)), binary=False)
+# output ---
+# Tree('S', [Tree('GPE', [('Rahul', 'NNP')]), ('is', 'VBZ'), ('a', 'DT'), ('very', 'RB'), ('good', 'JJ'), ('footballer', 'NN'), ('.', '.'), ('He', 'PRP'), ('wants', 'VBZ'), ('to', 'TO'), ('play', 'VB'), ('for', 'IN'), ('his', 'PRP$'), ('country', 'NN'), ('.', '.')])
+```
 
 ---
 
